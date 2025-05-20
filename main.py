@@ -271,7 +271,7 @@ def detect_container_details(input_image_byte: bytes) -> json:
     # Analyze and get results
     result: sdk.ImageAnalysisResult = image_analyzer.analyze()
 
-    # Early exist if error
+    # Early exit if error
     cnrai_detection: CNRAI = CNRAI()
     if result.reason != sdk.ImageAnalysisResultReason.ANALYZED:
         error_details = sdk.ImageAnalysisErrorDetails.from_result(result)
