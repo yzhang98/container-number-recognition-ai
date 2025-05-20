@@ -106,11 +106,12 @@ def get_ctnr_color_from_byte(input_byte_img: bytes, crop_zone: list[int]) -> lis
     nparr = np.frombuffer(input_byte_img, np.uint8)
     img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
+    # First index is the y-axis (height), second index is the x-axis (width)
     cropped_img: np.ndarray = img_np[
                               max(0, crop_zone[1] - 100): min(crop_zone[3] + 100,
-                                                              img_np.shape[1]),
+                                                              img_np.shape[0]),
                               max(0, crop_zone[0] - 100): min(crop_zone[2] + 100,
-                                                              img_np.shape[0])]
+                                                              img_np.shape[1])]
 
     byte_res: list = get_ctnr_color(cropped_img)
     return byte_res
@@ -348,9 +349,9 @@ if __name__ == '__main__':
             # Crop the detected bounding area from original image
             cropped_img: np.ndarray = input_img[
                                       max(0, res["bounding_box"][1] - 100): min(res["bounding_box"][3] + 100,
-                                                                                input_img.shape[1]),
+                                                     input_img.shape[0]),
                                       max(0, res["bounding_box"][0] - 100): min(res["bounding_box"][2] + 100,
-                                                                                input_img.shape[0])]
+                                                     input_img.shape[1])]
 
             # Put the detected details top left of the cropped image
             text = f"{res['container_number']} - {res['container_type']}"
