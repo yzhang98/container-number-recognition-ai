@@ -4,3 +4,4 @@ opencv-python
 numpy
 flask
 functions-framework==3.5.0
+pytest
